@@ -74,7 +74,7 @@ def upload():
     for upload in request.files.getlist("file"):
         # print upload.filename
         wb = load_workbook(filename=upload)#, read_only=True)
-        sheets = wb.get_sheet_names()
+        sheets = wb.sheetnames
         for sheet in sheets:
             print sheet
 

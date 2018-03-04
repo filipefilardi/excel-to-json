@@ -1,0 +1,45 @@
+.dropzone {
+    background-color: #537966;
+	border-radius: 8px;
+	
+	padding: 10px;
+	height: 200px;
+	cursor: pointer;
+
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.dropzone-active {
+	background-color: #cbe2d6;
+	border-style: solid;
+	border-color: #618e77;
+	border-radius: 8px;
+	padding: 10px;
+	height: 200px;
+
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.dropzone-accept {
+	background-color: white;
+}
+
+.dropzone p {
+	margin: auto;
+	color: white;
+	font-size: 18px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+
+.dropzone-files {
+	flex: 1;
+	margin: auto;
+	text-align: center;
+	color: black;
+	font-size: 15px;
+	cursor: default;
+}
