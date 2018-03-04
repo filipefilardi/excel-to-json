@@ -1,4 +1,5 @@
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, jsonify
+from flask_pymongo import PyMongo
 
 import os
 import json
@@ -7,11 +8,27 @@ import glob
 from openpyxl import Workbook , load_workbook
 from openpyxl.utils import column_index_from_string
 
+from config.keys import keys
+
 app = Flask(__name__)
+
+app.config['MONGO_DBNAME'] = keys['MONGO_DBNAME']
+app.config['MONGO_URI'] = keys['MONGO_URI']
+
+mongo = PyMongo(app)
+
+def insert_data_db(json_data):
+    converted = mongo.db.converted
+
+    # already have one json with this name
+    if (converted.find_one({'FILE_NAME': json_data["FILE_NAME"]})):
+        return 
+    # insert if do not have
+    converted.insert(json_data)
+
 
 # READ ALL ROWS IN WORKSHEET AND TRANSFORM INTO JSON
 def all_data_to_json(worksheet, filename, sheetname):
-    # with open('{}_{}.json'.format(filename,sheetname), 'w') as file:
     max_row = worksheet.max_row
     max_column = worksheet.max_column
 
@@ -48,11 +65,7 @@ def all_data_to_json(worksheet, filename, sheetname):
         "DATA_NUMBER" : max_row - 1
     }
 
-
-    return json_data
-
-        # json.dump(json_data, file, indent = 4, ensure_ascii = False)
-        # file.close()
+    insert_data_db(json_data)
 
 def identifier(data, word):
     for line in data["DATA_INFOS"]:
@@ -65,10 +78,8 @@ def identifier(data, word):
 def index():
     return "hello world"
 
-
 @app.route("/api/upload", methods=["POST"])
 def upload():
-    json_files = []
     for upload in request.files.getlist("file"):
         # try:
         
@@ -79,7 +90,7 @@ def upload():
         sheets = wb.sheetnames
         for sheet in sheets:
             ws = wb[sheet]
-            json_files.append(all_data_to_json(ws, filename, sheet))
+            all_data_to_json(ws, filename, sheet)
         # except:
         #     print "erro"
 
