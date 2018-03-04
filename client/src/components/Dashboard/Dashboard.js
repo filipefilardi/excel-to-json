@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 
+import loading from "./loading.gif";
 import "./dashboard.css";
 
 const theme = {
@@ -49,16 +50,35 @@ class Dashboard extends Component {
 			headers: { "content-type": "multipart/form-data" }
 		};
 
-		axios.post("/api/upload", data, config);
+		axios.post("/api/upload", data, config).then(() => {
+			this.setState({
+				isLoading: false
+			});
+			// redirect
+			console.log("redirect");
+		});
 	}
 
 	renderLoading() {
 		if (this.state.isLoading) {
-			return this.state.files.map(filename => (
-				<div key={filename} className="dropzone-files">
-					{filename}
+			return (
+				<div className="dropzone-loading-container">
+					<img
+						className="dropzone-loading-item-img"
+						src={loading}
+						alt="loading gif"
+					/>
+					<p className="dropzone-loading-item-text">
+						{" "}
+						converting your files{" "}
+					</p>
 				</div>
-			));
+			);
+			// return this.state.files.map(filename => (
+			// 	<div key={filename} className="dropzone-files">
+			// 		{filename}
+			// 	</div>
+			// ));
 		}
 		return <p>Arraste seu documento ou clique aqui!</p>;
 	}
@@ -69,7 +89,9 @@ class Dashboard extends Component {
 				<Dropzone
 					style={theme}
 					onDrop={this.handleDrop}
-					className={this.state.isLoading ? "dropzone-active" : "dropzone"}
+					className={
+						this.state.isLoading ? "dropzone-active" : "dropzone"
+					}
 					activeClassName="dropzone-active"
 					acceptClassName="dropzone-accept"
 					// accept="application/vnd.ms-excel"

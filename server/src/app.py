@@ -18,14 +18,16 @@ app.config['MONGO_URI'] = keys['MONGO_URI']
 mongo = PyMongo(app)
 
 def insert_data_db(json_data):
-    converted = mongo.db.converted
+    try:
+        converted = mongo.db.converted
 
-    # already have one json with this name
-    if (converted.find_one({'FILE_NAME': json_data["FILE_NAME"]})):
-        return 
-    # insert if do not have
-    converted.insert(json_data)
-
+        # already have one json with this name
+        if (converted.find_one({'FILE_NAME': json_data["FILE_NAME"]})):
+            return 
+        # insert if do not have
+        converted.insert(json_data)
+    except:
+        print "insertion error"
 
 # READ ALL ROWS IN WORKSHEET AND TRANSFORM INTO JSON
 def all_data_to_json(worksheet, filename, sheetname):

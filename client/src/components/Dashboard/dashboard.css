@@ -43,3 +43,30 @@
 	font-size: 15px;
 	cursor: default;
 }
+
+
+.dropzone-loading-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%
+}
+
+.dropzone-loading-item-text {
+	flex: 1;
+	margin: auto;
+	cursor: default;
+	
+	font-size: 18px;
+	text-transform: uppercase;
+}
+.dropzone-loading-item-img {
+	flex: 1;
+	max-height: 115px;
+	max-width: 115px;
+	margin: auto;
+	cursor: default;
+	margin-bottom: 10px;
+	
+	font-size: 18px;
+	text-transform: uppercase;
+}
