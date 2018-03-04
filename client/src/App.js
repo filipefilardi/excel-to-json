@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-
-import './app.css';
+import axios from "axios";
 
 class App extends Component {
-  render() {
-    return (
-      <div>
-          App
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div>
+				<button onClick={() => axios.get('/api/')
+  .then(function (response) {
+    console.log(response);
+  })}>hurray</button>
+			</div>
+		);
+	}
 }
 
 export default App;
