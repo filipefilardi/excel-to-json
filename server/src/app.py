@@ -65,47 +65,43 @@ def index():
     return "hello world"
 
 
-@app.route("/upload", methods=["POST"])
+@app.route("/api/upload", methods=["POST"])
 def upload():
-    form = request.form
-
-    # Is the upload using Ajax, or a direct POST by the form?
-    is_ajax = False
-    if form.get("__ajax", None) == "true":
-        is_ajax = True
-
-    # Target folder for these uploads.
-    # target = "uploadr/static/uploads/{}".format(upload_key)
-    # try:
-    #     os.mkdir(target)
-    # except:
-    #     if is_ajax:
-    #         return ajax_response(False, "Couldn't create upload directory: {}".format(target))
-    #     else:
-    #         return "Couldn't create upload directory: {}".format(target)
-
+    print "\n\n\n\n\n\n"
+    
+    # print "files", request.files, "\n\n"
+    
     for upload in request.files.getlist("file"):
-        # try:
-        filename = upload.filename.rsplit("/")[0]
-        filename =  filename.split('.')[0]
-
+        # print upload.filename
         wb = load_workbook(filename=upload)#, read_only=True)
-        # filename = file.split('.')
-
         sheets = wb.get_sheet_names()
         for sheet in sheets:
-            ws = wb[sheet]
+            print sheet
+
+    return "request"
+    
+    # for upload in request.files.getlist("file"):
+    #     # try:
+    #     filename = upload.filename.rsplit("/")[0]
+    #     filename =  filename.split('.')[0]
+
+    #     wb = load_workbook(filename=upload)#, read_only=True)
+    #     # filename = file.split('.')
+
+    #     sheets = wb.get_sheet_names()
+    #     for sheet in sheets:
+    #         ws = wb[sheet]
             
-            all_data_to_json(ws, filename, sheet)
+    #         all_data_to_json(ws, filename, sheet)
 
-        # except:
-            # return render_template('index.html')
+    #     # except:
+    #         # return render_template('index.html')
 
-    return render_template('index.html')
-    # try:
-    #     return render_template('index.html')
-    # except:
-    #     return render_template('index.html')
+    # return render_template('index.html')
+    # # try:
+    # #     return render_template('index.html')
+    # # except:
+    # #     return render_template('index.html')
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
