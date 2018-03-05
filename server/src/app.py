@@ -23,11 +23,13 @@ def insert_data_db(json_data):
 
         # already have one json with this name
         if (converted.find_one({'FILE_NAME': json_data["FILE_NAME"]})):
-            return 
+            return True
         # insert if do not have
         converted.insert(json_data)
+
+        return True
     except:
-        print "insertion error"
+        return False
 
 # READ ALL ROWS IN WORKSHEET AND TRANSFORM INTO JSON
 def all_data_to_json(worksheet, filename, sheetname):
@@ -67,7 +69,9 @@ def all_data_to_json(worksheet, filename, sheetname):
         "DATA_NUMBER" : max_row - 1
     }
 
-    insert_data_db(json_data)
+    if(insert_data_db(json_data)):
+        return json_data["FILE_NAME"]
+    
 
 def identifier(data, word):
     for line in data["DATA_INFOS"]:
@@ -82,6 +86,8 @@ def index():
 
 @app.route("/api/upload", methods=["POST"])
 def upload():
+    results = []
+
     for upload in request.files.getlist("file"):
         # try:
         
@@ -92,12 +98,26 @@ def upload():
         sheets = wb.sheetnames
         for sheet in sheets:
             ws = wb[sheet]
-            all_data_to_json(ws, filename, sheet)
+            result = all_data_to_json(ws, filename, sheet)
+            if result != None:
+                results.append(result)
         # except:
         #     print "erro"
 
-    return "200"
-    
+    return jsonify(results)
+
+@app.route("/api/download", methods=["GET"])
+def download():
+    try:
+        converted = mongo.db.converted
+        json_file = converted.find_one({'FILE_NAME': request.args.get('filename')})
+
+        # delete id form json file
+        del json_file["_id"]
+        return jsonify(json_file)
+    except:
+        return jsonify({})
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -147,14 +167,14 @@ def search():
     else:
         return render_template('search.html', result={})
 
-@app.route('/download')
-def download():
+# @app.route('/download')
+# def download():
 
-    files = []
-    directory = os.listdir(DIR_JSON)
+#     files = []
+#     directory = os.listdir(DIR_JSON)
     
-    for file in directory:
-        if(".json" in file):
-            files.append(file)
+#     for file in directory:
+#         if(".json" in file):
+#             files.append(file)
 
-    return render_template('download.html', files=files)
+#     return render_template('download.html', files=files)

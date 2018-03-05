@@ -3,6 +3,7 @@ import Dropzone from "react-dropzone";
 import axios from "axios";
 
 import loading from "./loading.gif";
+import json_icon from "./json_icon.png";
 import "./dashboard.css";
 
 const theme = {
@@ -16,7 +17,8 @@ class Dashboard extends Component {
 
 		this.state = {
 			isLoading: false,
-			files: []
+			files: [],
+			json: []
 		};
 
 		this.handleDrop = this.handleDrop.bind(this);
@@ -50,9 +52,11 @@ class Dashboard extends Component {
 			headers: { "content-type": "multipart/form-data" }
 		};
 
-		axios.post("/api/upload", data, config).then(() => {
+		axios.post("/api/upload", data, config).then(converted_files => {
+			console.log(converted_files.data);
 			this.setState({
-				isLoading: false
+				isLoading: false,
+				json: converted_files.data
 			});
 			// redirect
 			console.log("redirect");
@@ -74,13 +78,37 @@ class Dashboard extends Component {
 					</p>
 				</div>
 			);
-			// return this.state.files.map(filename => (
-			// 	<div key={filename} className="dropzone-files">
-			// 		{filename}
-			// 	</div>
-			// ));
 		}
 		return <p>Arraste seu documento ou clique aqui!</p>;
+	}
+
+	renderJsonFiles() {
+		if(this.state.json.length === 0){
+			return ""
+		}
+
+		return (
+			<div>
+				<div className="title">download your converted json</div>
+				<div className="download-container">
+					{this.state.json.map(converted_file => ( 
+						<div key={converted_file} className="json-container">
+							<img
+								src={json_icon}
+								alt="json_icon"
+								className="json-img"
+							/>
+							<a download={converted_file + ".json"}
+								href={"/api/download?filename=" + converted_file}
+								className="json-link"
+							>	
+								{converted_file}								
+							</a>
+						</div>
+					))}
+				</div>
+			</div>
+		);
 	}
 
 	render() {
@@ -98,6 +126,8 @@ class Dashboard extends Component {
 				>
 					{this.renderLoading()}
 				</Dropzone>
+
+				{this.renderJsonFiles()}	
 			</div>
 		);
 	}

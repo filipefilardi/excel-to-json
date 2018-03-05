@@ -70,3 +70,42 @@
 	font-size: 18px;
 	text-transform: uppercase;
 }
+
+/*******************************************/
+.title {
+	text-align: center;
+	margin: 15px 0;
+	text-transform: uppercase;
+}
+
+.download-container {
+	background-color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+
+}
+
+.json-container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 0 5%;
+	margin: 15px 0;
+}
+
+.json-link {
+	flex: 1;
+	margin: auto;
+	color: #9777a8;
+}
+
+.json-img {
+	flex: 1;
+	margin: auto;
+	min-height: 80px;
+	min-width: 80px;
+	max-height: 80px;
+	max-width: 80px; 
+
+	padding-bottom: 10px;
+}
