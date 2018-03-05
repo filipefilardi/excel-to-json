@@ -133,10 +133,16 @@ def search():
                         suggestions.append(header)
                 if len(suggestions) == 10:
                     return jsonify(suggestions)
-                    
+
         return jsonify(suggestions) 
     except:
         return jsonify(suggestions)
+
+
+@app.route('/api/merge', methods=['GET'])
+def merge():
+    print request.args.get('value')
+    return "merge"
 
 @app.route('/searchbackup', methods=['GET', 'POST'])
 def searchbackup():
