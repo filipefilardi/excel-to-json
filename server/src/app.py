@@ -36,35 +36,36 @@ def all_data_to_json(worksheet, filename, sheetname):
     max_row = worksheet.max_row
     max_column = worksheet.max_column
 
-    cabecalho = []
+    header = []
     for col in worksheet.iter_rows(min_row=1, max_col=max_column, max_row=1):
         for cell in col:
-            cabecalho.append(cell.value)
+            header.append(cell.value)
 
     data = []
     for row in worksheet.iter_rows(min_row=2, max_col=max_column, max_row=max_row):
         item = {}
         for cell in row: 
             try:
-                if("Date" in cabecalho[column_index_from_string(cell.column)-1] or "Data" in cabecalho[column_index_from_string(cell.column)-1]):
+                if("Date" in header[column_index_from_string(cell.column)-1] or "Data" in header[column_index_from_string(cell.column)-1]):
                     item["Date"] = str(cell.value)
                     continue
             except:
                 x = 0
             try:
-                item[cabecalho[column_index_from_string(cell.column)-1].encode("utf-8")] = cell.value.encode("utf-8")
+                item[header[column_index_from_string(cell.column)-1].encode("utf-8")] = cell.value.encode("utf-8")
             except:
                 try:
-                    item[cabecalho[column_index_from_string(cell.column)-1].encode("utf-8")] = cell.value
+                    item[header[column_index_from_string(cell.column)-1].encode("utf-8")] = cell.value
                 except:
                     try:
-                        item[cabecalho[column_index_from_string(cell.column)-1]] = cell.value.encode("utf-8")
+                        item[header[column_index_from_string(cell.column)-1]] = cell.value.encode("utf-8")
                     except:
                         item['None'] = cell.value
         data.append(item)
     
     json_data = {
         "FILE_NAME" : filename + "_" + sheetname,
+        "HEADER" : header,
         "DATA_INFOS" : data,
         "DATA_NUMBER" : max_row - 1
     }
@@ -118,8 +119,27 @@ def download():
     except:
         return jsonify({})
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route("/api/search", methods=["GET"])
 def search():
+    converted = mongo.db.converted
+    # suggestion = converted.find_one({'HEADER': request.args.get('value')})
+    # suggestion = converted.find({'HEADER': "a"}).limit(10)
+    suggestions = []
+    try:
+        for data in converted.find():
+            for header in data["HEADER"]:
+                if None != header and len(suggestions) < 10:
+                    if request.args.get('value') in header and header not in suggestions:
+                        suggestions.append(header)
+                if len(suggestions) == 10:
+                    return jsonify(suggestions)
+                    
+        return jsonify(suggestions) 
+    except:
+        return jsonify(suggestions)
+
+@app.route('/searchbackup', methods=['GET', 'POST'])
+def searchbackup():
     if request.method == 'POST':
         word = request.form['word']
 

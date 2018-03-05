@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Autosuggest from "react-autosuggest";
+import axios from "axios";
 
 import "./search.css";
 
@@ -20,38 +21,14 @@ const theme = {
 	// sectionTitle:             'sectionTitle'
 };
 
-// Imagine you have a list of languages that you'd like to autosuggest.
-const languages = [
-	{
-		name: "identifier",
-		year: 1972
-	},
-	{
-		name: "identificador",
-		year: 2012
-	}
-];
-
-// Teach Autosuggest how to calculate suggestions for any given input value.
-const getSuggestions = value => {
-	const inputValue = value.trim().toLowerCase();
-	const inputLength = inputValue.length;
-
-	return inputLength === 0
-		? []
-		: languages.filter(
-				lang =>
-					lang.name.toLowerCase().slice(0, inputLength) === inputValue
-			);
-};
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.name;
+const getSuggestionValue = suggestion => suggestion;
 
 // Use your imagination to render suggestions.
-const renderSuggestion = suggestion => <span>{suggestion.name}</span>;
+const renderSuggestion = suggestion => <span>{suggestion}</span>;
 
 class Search extends React.Component {
 	constructor() {
@@ -77,9 +54,17 @@ class Search extends React.Component {
 	// Autosuggest will call this function every time you need to update suggestions.
 	// You already implemented this logic above, so just use it.
 	onSuggestionsFetchRequested = ({ value }) => {
-		this.setState({
-			suggestions: getSuggestions(value)
-		});
+		axios.get('/api/search', {
+			params: {
+				value: value
+			}
+		}).then((suggestions) => {
+				this.setState({
+					suggestions: suggestions.data 
+				});
+			}
+		)
+
 	};
 
 	// Autosuggest will call this function every time you need to clear suggestions.
