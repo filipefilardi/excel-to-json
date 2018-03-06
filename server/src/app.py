@@ -141,8 +141,43 @@ def search():
 
 @app.route('/api/merge', methods=['GET'])
 def merge():
-    print request.args.get('value')
-    return "merge"
+    converted = mongo.db.converted
+    
+    result_data = []
+    
+    # get all files in db
+    for data in converted.find():
+        has_common_identifier = False 
+        
+        # to each file, check the headers if they have common identifier
+        for header in data["HEADER"]:
+            if request.args.get('value') == header:
+                has_common_identifier = True
+                break
+
+        # to each file with the common identifier
+        if has_common_identifier == True:
+            if result_data:
+                for row in data["DATA_INFOS"]:
+                    identifier = row[request.args.get('value')]
+                    has_updated = False
+
+                    # check if my result data has same identifier, if yes, update with merge
+                    for data_row in result_data:
+                        if (identifier == data_row[request.args.get('value')]):
+                            data_row.update(row)
+                            has_updated = True
+                            break
+
+                    # if no common identifier was found, add to result without any merge
+                    if has_updated == False:
+                        result_data.append(row)
+            else:
+                # result data is empty, insert with the first json found
+                for row in data["DATA_INFOS"]:
+                    result_data.append(row)
+    
+    return jsonify(result_data)
 
 @app.route('/searchbackup', methods=['GET', 'POST'])
 def searchbackup():
