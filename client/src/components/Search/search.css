@@ -23,42 +23,29 @@
     outline: none;
     box-shadow: 0 4.5px 5.5px 0 rgba(0, 0, 0, .2);
 }
-
+.suggestionsContainer {
+	display: flex;
+    box-shadow: 0 4.5px 5.5px 0 rgba(0, 0, 0, .2); 
+	
+}
+.suggestionsContainer ul{
+	padding: 0px;
+}
 .suggestionsList {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
 	background-color: white;
-    box-shadow: 0 4.5px 5.5px 0 rgba(0, 0, 0, .2); 
+	text-align: left;
 }
 
 .suggestion {
 	font-size: 13px;
-	padding: 10px 0px;
+	flex:1;
+	padding: 10px;
 }
 
 .suggestionHighlighted {
 	background-color: #7a56a3;
 	color: white;
 }   
-
-/*.suggestion {
-	font-size: 13px;
-	padding: 10px 0;
-	display: flex;
-}
-
-.suggestion-name {
-	color: #7a56a3;
-}
-
-.suggestion-school {
-	margin-left: 5px;
-	font-size: 11px;
-}
-
-/*
-.suggestionHighlighted .suggestion-name{
-	font-weight: bold;
-	color: white;
-}   */

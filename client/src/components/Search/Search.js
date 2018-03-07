@@ -10,17 +10,11 @@ const theme = {
 	input: "input",
 	inputOpen: "inputOpen",
 	inputFocused: "inputFocused",
-	// suggestionsContainer:     'suggestionsContainer',
-	// suggestionsContainerOpen: 'suggestionsContainerOpen',
+	suggestionsContainer:     'suggestionsContainer',
 	suggestionsList: "suggestionsList",
 	suggestion: "suggestion",
-	// suggestionFirst:          'suggestionFirst',
 	suggestionHighlighted: "suggestionHighlighted"
-	// sectionContainer:         'sectionContainer',
-	// sectionContainerFirst:    'sectionContainerFirst',
-	// sectionTitle:             'sectionTitle'
 };
-
 
 const getSuggestionValue = suggestion => suggestion;
 
@@ -32,7 +26,8 @@ class Search extends Component {
 
 		this.state = {
 			value: "",
-			suggestions: []
+			suggestions: [],
+			result_json: []
 		};
 	}
 
@@ -43,17 +38,17 @@ class Search extends Component {
 	};
 
 	onSuggestionsFetchRequested = ({ value }) => {
-		axios.get('/api/search', {
-			params: {
-				value: value
-			}
-		}).then((suggestions) => {
+		axios
+			.get("/api/search", {
+				params: {
+					value: value
+				}
+			})
+			.then(suggestions => {
 				this.setState({
-					suggestions: suggestions.data 
+					suggestions: suggestions.data
 				});
-			}
-		)
-
+			});
 	};
 
 	onSuggestionsClearRequested = () => {
@@ -62,14 +57,27 @@ class Search extends Component {
 		});
 	};
 
-	onSuggestionSelected = (event, { suggestion, suggestionValue}) => {
-		axios.get('/api/merge', {
-			params: {
-				value: suggestion
-			}
-		})
-	}
+	onSuggestionSelected = (event, { suggestion, suggestionValue }) => {
+		axios
+			.get("/api/merge", {
+				params: {
+					value: suggestion
+				}
+			})
+			.then(res => {
+				this.setState({
+					result_json: res.data
+				})
+			});
+	};
 
+	renderTable() {
+		return (
+			this.state.result_json.map(row => (
+				console.log(row)
+			))
+		)		
+	}
 
 	render() {
 		const { value, suggestions } = this.state;
@@ -81,16 +89,20 @@ class Search extends Component {
 		};
 
 		return (
-			<Autosuggest
-				theme={theme}
-				suggestions={suggestions}
-				onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-				onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-				onSuggestionSelected={this.onSuggestionSelected}
-				getSuggestionValue={getSuggestionValue}
-				renderSuggestion={renderSuggestion}
-				inputProps={inputProps}
-			/>
+			<div>
+				<Autosuggest
+					theme={theme}
+					suggestions={suggestions}
+					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+					onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+					onSuggestionSelected={this.onSuggestionSelected}
+					getSuggestionValue={getSuggestionValue}
+					renderSuggestion={renderSuggestion}
+					inputProps={inputProps}
+				/>
+
+				{this.renderTable()}
+			</div>
 		);
 	}
 }
