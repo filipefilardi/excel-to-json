@@ -65,10 +65,19 @@ def all_data_to_json(worksheet, filename, sheetname):
     
     json_data = {
         "FILE_NAME" : filename + "_" + sheetname,
-        "HEADER" : header,
         "DATA_INFOS" : data,
         "DATA_NUMBER" : max_row - 1
     }
+
+    # insert headers in keys collection
+    keys = mongo.db.keys
+
+    for h in header:
+        if (keys.find_one({'key': h}) or h == None):
+            continue
+
+        # insert if do not have
+        keys.insert({'key': h})
 
     if(insert_data_db(json_data)):
         return json_data["FILE_NAME"]
@@ -121,22 +130,15 @@ def download():
 
 @app.route("/api/search", methods=["GET"])
 def search():
-    converted = mongo.db.converted
-    # suggestion = converted.find_one({'HEADER': request.args.get('value')})
-    # suggestion = converted.find({'HEADER': "a"}).limit(10)
-    suggestions = []
-    try:
-        for data in converted.find():
-            for header in data["HEADER"]:
-                if None != header and len(suggestions) < 10:
-                    if request.args.get('value') in header and header not in suggestions:
-                        suggestions.append(header)
-                if len(suggestions) == 10:
-                    return jsonify(suggestions)
+    keys = mongo.db.keys
 
-        return jsonify(suggestions) 
-    except:
-        return jsonify(suggestions)
+    res = []
+    for i in keys.find({"key" : {'$regex': request.args.get('value') , '$options' : 'i'}}):
+        res.append(i["key"])
+        if len(res) == 10:
+            break
+    
+    return jsonify(res)
 
 
 @app.route('/api/merge', methods=['GET'])
