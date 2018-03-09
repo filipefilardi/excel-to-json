@@ -91,9 +91,9 @@ def identifier(data, word):
                 return True
         return False
 
-@app.route("/api/")
+@app.route("/")
 def index():
-    return "hello world"
+    return "Good job, your flask is working"
 
 @app.route("/api/upload", methods=["POST"])
 def upload():
