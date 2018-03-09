@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
+import Table from "../Table/Table";
 
 import "./search.css";
 
@@ -71,14 +72,6 @@ class Search extends Component {
 			});
 	};
 
-	renderTable() {
-		return (
-			this.state.result_json.map(row => (
-				console.log(row)
-			))
-		)		
-	}
-
 	render() {
 		const { value, suggestions } = this.state;
 
@@ -101,7 +94,7 @@ class Search extends Component {
 					inputProps={inputProps}
 				/>
 
-				{this.renderTable()}
+				<Table result_json={this.state.result_json}/>
 			</div>
 		);
 	}
