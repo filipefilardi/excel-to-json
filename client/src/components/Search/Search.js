@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
-import Table from "../Table/Table";
+import { CsvToHtmlTable } from 'react-csv-to-table';
 
 import "./search.css";
+import"../Table/table.css";
 
 const theme = {
 	container: "container",
@@ -28,7 +29,7 @@ class Search extends Component {
 		this.state = {
 			value: "",
 			suggestions: [],
-			result_json: []
+			result_json: ""
 		};
 	}
 
@@ -94,7 +95,9 @@ class Search extends Component {
 					inputProps={inputProps}
 				/>
 
-				<Table result_json={this.state.result_json}/>
+				<div className="table-responsive">
+					<CsvToHtmlTable data={this.state.result_json} csvDelimiter="," tableClassName="table table-bordered table-hover"/>
+				</div>
 			</div>
 		);
 	}

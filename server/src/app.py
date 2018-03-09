@@ -4,6 +4,7 @@ from flask_pymongo import PyMongo
 import os
 import json
 import glob
+import pandas
 
 from openpyxl import Workbook , load_workbook
 from openpyxl.utils import column_index_from_string
@@ -178,66 +179,8 @@ def merge():
                 # result data is empty, insert with the first json found
                 for row in data["DATA_INFOS"]:
                     result_data.append(row)
-    
-    return jsonify(result_data)
 
-@app.route('/searchbackup', methods=['GET', 'POST'])
-def searchbackup():
-    if request.method == 'POST':
-        word = request.form['word']
+    # json to csv
+    df = pandas.read_json(json.dumps(result_data))
 
-        files = os.listdir(DIR_JSON)
-
-        result = []
-        for file in files:
-            if(".json" in file and not "result.json" in file):            
-                data = json.load(open(DIR_JSON + file))
-                
-                if(identifier(data, word)):
-                    result.append(file)
-        if (len(result) > 0 ):
-            with open('{}result.json'.format(DIR_JSON), 'w') as json_result:
-                    result_data = json.load(open(DIR_JSON + result.pop()))
-
-                    for file in result:
-                        data = json.load(open(DIR_JSON + file))
-                        row_data = []
-                        for row in data["DATA_INFOS"]:#["identificador"]
-                            row_data.append(row)
-                            # d.update(result_data)
-                        
-
-                        for row in row_data:
-                            for r in result_data["DATA_INFOS"]:
-                                if (row["identificador"] == r["identificador"]):
-                                    r.update(row)
-                                    break
-
-                        count = 0
-                        for i in result_data["DATA_INFOS"]:
-                            count = count + 1
-
-                        result_data["DATA_NUMBER"] = count
-
-                    json.dump(result_data, json_result, indent = 4)
-                    json_result.close()
-        else:
-            return render_template('search.html', result={})            
-
-        data = json.load(open(DIR_JSON + "result.json"))
-
-        return render_template('search.html', result=data) 
-    else:
-        return render_template('search.html', result={})
-
-# @app.route('/download')
-# def download():
-
-#     files = []
-#     directory = os.listdir(DIR_JSON)
-    
-#     for file in directory:
-#         if(".json" in file):
-#             files.append(file)
-
-#     return render_template('download.html', files=files)
+    return jsonify(df.to_csv(encoding='utf-8'))
