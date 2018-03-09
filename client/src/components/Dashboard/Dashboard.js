@@ -79,7 +79,7 @@ class Dashboard extends Component {
 				</div>
 			);
 		}
-		return <p>Arraste seu documento ou clique aqui!</p>;
+		return <p>Drop or click here to convert your excel file</p>;
 	}
 
 	renderJsonFiles() {
