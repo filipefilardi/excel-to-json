@@ -1,10 +1,10 @@
 # excel-to-json 
 
-## Getting Started
-
 Excel to Json online converter made with Python/Flask and React.js
 
 *Supported file extension .xlsx, .xlsm, .xltx, .xltm*
+
+## Getting Started
 
 ### Prerequisites
 
