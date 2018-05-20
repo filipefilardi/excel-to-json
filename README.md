@@ -32,7 +32,7 @@ If you're missing one of the following dependencies, go through the documentatio
 * client 
 	* run `npm run start` inside client folder
 
-### example of config/keys.py
+### Example of config/keys.py
 
 ``` py
 keys = {
