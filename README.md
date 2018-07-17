@@ -84,6 +84,16 @@ keys = {
 
 ```
 
+## Structure
+
+### Client
+
+Client-side was made using `React.js` to help us building user interface. Inside `src` folder you can see all components developed, such as header, dropzone, searchbar and table.
+
+### Server
+
+Server-side was made using `Flask/python` to help us building the api necessary to serve the client. As mentioned, you must configure your keys.py in order to access your personal MongoDB. In [app.py](https://github.com/filipefilardi/excel-to-json/blob/master/server/src/app.py) you can access all functions developed and endpoints.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
