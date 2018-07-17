@@ -1,8 +1,16 @@
 # excel-to-json 
 
-Excel to Json online converter made with Python/Flask and React.js
-
 *Supported file extension .xlsx, .xlsm, .xltx, .xltm*
+
+Web platform to help biologists to organize data collected made with Python/Flask and React.js. The application converts files from excel to json, storing the information in a non-relational database (MongoDB), allowing the user search data by a common identifier in the database.
+
+## Sharing data
+
+Biodiversity always had and an essential role in the human species, we use animals, plants and various microorganisms to feed ourselves, produce medicines and also as raw material for various products. 
+
+Although, it's difficult to maintain a balance between economic development and biodiversity conservation, and even with legislation to prevent exploitation of ecosystems, it is not always possible to monitor biodiversity degradation.
+
+The data collected can help to detect problems that can occur, allowing disaster prevention and consequently saving both environmental resources and financial resources but for that, is necessary to store data in a way that biological researchers can use. That's the problem this projects aim to help. 
 
 ## Getting Started
 
