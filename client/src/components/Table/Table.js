@@ -2,44 +2,6 @@ import React, { Component } from "react";
 
 import "./table.css";
 
-const result_json = [
-  {
-    "fetiche_pessoal": "nao mandar curriculo", 
-    "hurray": "111", 
-    "nome": "fil", 
-    "profissao": "desempregado"
-  }, 
-  {
-    "fetiche_pessoal": "dinheiro", 
-    "hurray": "222", 
-    "nome": "noba", 
-    "profissao": "advogado"
-  }, 
-  {
-    "fetiche_pessoal": "codigo", 
-    "hurray": "333", 
-    "nome": "kazu", 
-    "profissao": "coder"
-  }, 
-  {
-    "fetiche_pessoal": "vencer o mau", 
-    "hurray": "444", 
-    "profissao": "superheroi"
-  }, 
-  {
-    "fetiche_pessoal": "jogar na rede", 
-    "hurray": "555", 
-    "profissao": "gamer"
-  }, 
-  {
-    "fetiche_pessoal": "bebidas alcoolicas", 
-    "hurray": "666", 
-    "profissao": "mixologista",
-    "saprofissao": "mixologista",
-    "prddsdofissao": "mixologista"
-  }
-];
-
 class Table extends Component {
 	renderTable() {
 		return (
