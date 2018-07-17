@@ -16,7 +16,7 @@ The data collected can help to detect problems that can occur, allowing disaster
 
 The following gif show ou the dropzone which converts excel spreadsheet to json and stores in MongoDB. It will make one json for each sheet in the same file.
 
-[gif]
+[gif ]
 
 In `Search` you can type the keyword identifier to merge your data in one table like the following example.
 
