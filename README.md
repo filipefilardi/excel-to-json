@@ -12,6 +12,40 @@ Although, it's difficult to maintain a balance between economic development and 
 
 The data collected can help to detect problems that can occur, allowing disaster prevention and consequently saving both environmental resources and financial resources but for that, is necessary to store data in a way that biological researchers can use. That's the problem this projects aim to help. 
 
+## How it works
+
+The following gif show ou the dropzone which converts excel spreadsheet to json and stores in MongoDB. It will make one json for each sheet in the same file.
+
+[gif]
+
+In `Search` you can type the keyword identifier to merge your data in one table like the following example.
+
+### Example Sheet 1
+
+TK | Genus | Species | Code_Age | Code_Sex
+--- | --- | --- | --- | ---
+TK121190 | Necromys | lasiurus | 3 | 2
+TK121191 | Necromys | lasiurus | 2 | 1
+TK121192 | Necromys | lasiurus | 3 | 2
+TK121193 | Necromys | lasiurus | 2 | 2
+
+### Example Sheet 2
+
+TK | Antibody | Weight | Length
+--- | --- | --- | ---
+TK121190 | Nega | 45 | 193
+TK121191 | Nega | 24 | 166
+TK121192 | Nega | 54 | 206
+
+### Result Sheet
+
+TK | Genus | Species | Code_Age | Code_Sex | Weight | Length
+--- | --- | --- | --- | --- | --- | ---
+TK121190 | Necromys | lasiurus | 3 | 2 | Nega | 45 | 193
+TK121191 | Necromys | lasiurus | 2 | 1 | Nega | 24 | 166
+TK121192 | Necromys | lasiurus | 3 | 2 | Nega | 54 | 206
+TK121193 | Necromys | lasiurus | 2 | 2 |  |  | 
+
 ## Getting Started
 
 ### Prerequisites
