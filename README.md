@@ -14,7 +14,7 @@ The data collected can help to detect problems that can occur, allowing disaster
 
 ## How it works
 
-The following gif show ou the dropzone which converts excel spreadsheet to json and stores in MongoDB. It will make one json for each sheet in the same file.
+The following gif show the dropzone which converts excel spreadsheet to json and stores in MongoDB. It will make one json for each sheet in the same file.
 
 ![exceltojsongif](https://user-images.githubusercontent.com/7308241/42792419-8b0231dc-894b-11e8-8adf-36f5c426e4df.gif)
 
