@@ -66,6 +66,7 @@ def all_data_to_json(worksheet, filename, sheetname):
     
     json_data = {
         "FILE_NAME" : filename + "_" + sheetname,
+        "HEADER" : header,
         "DATA_INFOS" : data,
         "DATA_NUMBER" : max_row - 1
     }
