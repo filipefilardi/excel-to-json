@@ -31,20 +31,33 @@ TK121193 | Necromys | lasiurus | 2 | 2
 
 ### Example Sheet 2
 
-TK | Antibody | Weight | Length
---- | --- | --- | ---
-TK121190 | Nega | 45 | 193
-TK121191 | Nega | 24 | 166
-TK121192 | Nega | 54 | 206
+TK | Weight | Length
+--- | --- | ---
+TK121190 | 45 | 193
+TK121191 | 24 | 166
+TK121192 | 54 | 206
+TK121196 | 45 | 180
+
+### Example Sheet 2
+
+TK | Antibody
+--- | ---
+TK121195 | Nega 
+TK121198 | Nega 
+TK121199 | Nega
 
 ### Result Sheet
 
-TK | Genus | Species | Code_Age | Code_Sex | Weight | Length
---- | --- | --- | --- | --- | --- | ---
-TK121190 | Necromys | lasiurus | 3 | 2 | Nega | 45 | 193
-TK121191 | Necromys | lasiurus | 2 | 1 | Nega | 24 | 166
-TK121192 | Necromys | lasiurus | 3 | 2 | Nega | 54 | 206
+TK | Genus | Species | Code_Age | Code_Sex | Antibody | Weight | Length
+--- | --- | --- | --- | --- | --- | --- | ---
+TK121190 | Necromys | lasiurus | 3 | 2 |  | 45 | 193
+TK121191 | Necromys | lasiurus | 2 | 1 |  | 24 | 166
+TK121192 | Necromys | lasiurus | 3 | 2 |  | 54 | 206
 TK121193 | Necromys | lasiurus | 2 | 2 |  |  | 
+TK121195 |  |  |  |  | Nega |  |
+TK121196 |  |  |  |  |  | 45 | 180
+TK121198 |  |  |  |  | Nega |  |
+TK121199 |  |  |  |  | Nega |  |
 
 ## Getting Started
 
