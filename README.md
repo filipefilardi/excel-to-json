@@ -69,6 +69,7 @@ If you're missing one of the following dependencies, go through the documentatio
 
 * [npm](https://www.npmjs.com/) to install your client made with [React.js](https://reactjs.org)
 * [flask](http://flask.pocoo.org/) to run your python server
+* [MongoDB](https://docs.mongodb.com/manual/tutorial/getting-started/) to store your files
 
 ### Installation
 
