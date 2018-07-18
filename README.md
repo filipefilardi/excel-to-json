@@ -18,7 +18,7 @@ The following gif show the dropzone which converts excel spreadsheet to json and
 
 ![exceltojsongif](https://user-images.githubusercontent.com/7308241/42792419-8b0231dc-894b-11e8-8adf-36f5c426e4df.gif)
 
-In `Search` you can type the keyword identifier to merge your data in one table like the following example.
+In `Search` you can type the keyword identifier to merge your data in one table like the following example and following gif.
 
 ### Example Sheet 1
 
@@ -58,6 +58,8 @@ TK121195 |  |  |  |  | Nega |  |
 TK121196 |  |  |  |  |  | 45 | 180
 TK121198 |  |  |  |  | Nega |  |
 TK121199 |  |  |  |  | Nega |  |
+
+![merge-gif](https://user-images.githubusercontent.com/7308241/42913006-c6ecbdce-8ac8-11e8-9caa-2ecbee459a11.gif)
 
 ## Getting Started
 
